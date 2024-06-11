@@ -9,7 +9,6 @@ public class ItemMove : MonoBehaviour
 
     private bool inPickupRange;
 
-    public float damage;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +22,7 @@ public class ItemMove : MonoBehaviour
     {
         if (inPickupRange)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position + Vector3.up, speed * Time.deltaTime);
+            MoveTo(transform.position, player.transform.position);
         }
     }
 
@@ -36,8 +35,12 @@ public class ItemMove : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<PlayerHealth>().healthbar.SetHP(other.gameObject.GetComponent<PlayerHealth>().healthbar.GetHP() - damage);
             Destroy(gameObject);
         }
+    }
+
+    public void MoveTo(Vector3 startPos, Vector3 target)
+    {
+        transform.position = Vector3.MoveTowards(startPos, target + Vector3.up, speed * Time.deltaTime);   
     }
 }
